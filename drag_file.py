@@ -37,9 +37,11 @@ class ImageWindow(QMainWindow):
 
     def load_image(self, file_path):
         pixmap = QPixmap(file_path)
-        self.label.setPixmap(pixmap)
-        self.label.setScaledContents(True)
-
+        # 현재 QLable의 크기를 얻음
+        label_size = self.label.size()
+        # 이미지의 비율을 유지하면서 앱 크기(800, 600)에 맞게 스케일 조정
+        scaled_pixmap = pixmap.scaled(label_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        self.label.setPixmap(scaled_pixmap)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
