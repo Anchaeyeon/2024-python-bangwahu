@@ -20,11 +20,20 @@ class ImageWindow(QMainWindow):
 
     # 드래그 이벤트 처리
     def dragEnterEvent(self, event):
-        pass
+        # 드래그 된 데이터에 파일이 있는지 확인
+        if event.mimeData().hasUrls():
+            # 드래그 동작 허용
+            event.acceptProposedAction()
 
     # 드랍 이벤트 처리
     def dropEvent(self, event):
-        pass
+        # 드랍된 모든 파일 URL에 대해 반복 처리
+        for url in event.mimeData().urls():
+            file_path = url.toLocalFile()
+
+            # 이미지 파일 확장자 체크
+            if file_path.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp', '.gif')):
+                self.load_image(file_path)
 
     def load_image(self, file_path):
         pixmap = QPixmap(file_path)
