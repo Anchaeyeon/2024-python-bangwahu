@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QAction, QFileDialog
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
@@ -17,6 +17,30 @@ class ImageWindow(QMainWindow):
         self.setCentralWidget(self.label)
         # 드래그 앤 드랍 활성화
         self.setAcceptDrops(True)
+
+        # 메뉴바 설정
+        self.create_menu()
+
+    def create_menu(self):
+        menu_bar = self.menuBar()
+        # 파일 메뉴 생성
+        file_menu = menu_bar.addMenu('파일')
+
+        # '이미지 열기' 액션을 추가
+        open_action = QAction('이미지 열기', self)
+        open_action.triggered.connect(self.open_image)
+        file_menu.addAction(open_action)
+
+        # '종료' 액션 추가
+        exit_action = QAction('종료', self)
+        exit_action.triggered.connect(self.close)
+        file_menu.addAction(exit_action)
+
+    def open_image(self):
+        # 대화상자를 열고 이미지 파일 선택
+        file_path, _ = QFileDialog.getOpenFileName(self, '이미지 파일 열기', '', '이미지 파일 (*.png;*.jpg;*.jpeg;*.bmp;*.gif)')
+        if file_path:
+            self.load_image(file_path)
 
     # 드래그 이벤트 처리
     def dragEnterEvent(self, event):
