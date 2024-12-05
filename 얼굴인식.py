@@ -30,9 +30,6 @@ class ImageWindow(QMainWindow):
 
         self.ENCODINGS_FILE = 'encodings.pickle'
 
-        # 테스트 할 사진 파일
-        self.IMAGE_TO_TEST = 'test1.jpg'
-
         self.TOLERANCE = 0.4
         self.FRAME_THICKNESS = 3
         self.FONT_THICKNESS = 2
@@ -99,7 +96,7 @@ class ImageWindow(QMainWindow):
     def perform_face_recognition(self):
         if self.current_image_path:
             # 테스트 이미지 로드
-            test_image = face_recognition.load_image_file(self.IMAGE_TO_TEST)
+            test_image = face_recognition.load_image_file(self.current_image_path)
 
             # 테스트 이미지에서 얼굴 추출
             locations = face_recognition.face_locations(test_image)
