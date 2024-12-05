@@ -108,7 +108,7 @@ class ImageWindow(QMainWindow):
             locations = face_recognition.face_locations(test_image)
             encodings = face_recognition.face_encodings(test_image, locations)
 
-            test_image = cv2.cvtColor(test_image, cv2.COLOR_BGRA2BGR)
+            test_image = cv2.cvtColor(test_image, cv2.COLOR_RGB2BGR)
 
             for face_encoding, face_location in zip(encodings, locations):
                 results = face_recognition.compare_faces(self.known_faces, face_encoding, self.TOLERANCE)
