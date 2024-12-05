@@ -1,3 +1,5 @@
+import hashlib
+
 import face_recognition
 import cv2
 import os
@@ -91,7 +93,11 @@ class ImageWindow(QMainWindow):
         self.perform_face_recognition()
 
     def name_to_color(self, name):
-        return [255, 255, 255]
+        hash_value = hashlib.md5(name.encode()).hexdigest()
+        r = int(hash_value[0:2], 16)
+        g = int(hash_value[2:4], 16)
+        b = int(hash_value[4:6], 16)
+        return (r, g, b)
 
     def perform_face_recognition(self):
         if self.current_image_path:
